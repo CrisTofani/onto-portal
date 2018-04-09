@@ -1,0 +1,16 @@
+# dependencies
+node_modules
+
+# production
+dist
+
+# misc
+.DS_Store
+Thumbs.db
+.env
+.idea
+
+# logs
+npm-debug.log
+yarn-error.log
+compilation-stats.json
