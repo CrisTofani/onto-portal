@@ -4,12 +4,21 @@ const initialList = {
   data: [],
   error: ''
 }
+
 const initialDetail = {
   isFetching: false,
   hasFetched: false,
   data: {},
   error: ''
 }
+
+const initialHierarchy = {
+  isFetching: false,
+  hasFetched: false,
+  data: [],
+  error: ''
+}
+
 
 export const vocListReducer = (state = initialList, action) => {
   switch (action.type) {
@@ -55,6 +64,33 @@ export const vocDetailReducer = (state = initialDetail, action) => {
       }
 
     case 'REQUEST_VOC_DETAIL_REJECTED':
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload
+      }
+
+    default: return state
+  }
+}
+
+export const vocHierarchyReducer = (state = initialHierarchy, action) => {
+  switch (action.type) {
+    case 'REQUEST_VOC_HIERARCHY_PENDING':
+      return {
+        ...state,
+        isFetching: true
+      }
+
+    case 'REQUEST_VOC_HIERARCHY_FULFILLED':
+      return {
+        ...state,
+        isFetching: false,
+        hasFetched: true,
+        data: action.payload
+      }
+
+    case 'REQUEST_VOC_HIERARCHY_REJECTED':
       return {
         ...state,
         isFetching: false,
