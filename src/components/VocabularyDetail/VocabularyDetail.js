@@ -6,6 +6,7 @@ import {
 } from 'reactstrap'
 
 import Error from '../Error'
+import VocabularyHierarchy from './VocabularyHierarchy.jsx';
 
 const vocabularyError = 'Errore durante il caricamento del vocabolario'
 
@@ -50,12 +51,15 @@ const createVocabulary = (vocabulary) => {
               {voc.licenses.map(license => license.value).join(' ')}
             </CardText>
 
-            <Alert color="secondary" className="p-0 mb-0 border-0">
+            <Alert color="secondary" className="p-0 border-0">
               <Badge color="danger" className="px-3 py-2">Vocabolario</Badge>
               <strong className="px-2">
                 TAG: {voc.tags.map(tag => tag.value).join(' - ')}
               </strong>
             </Alert>
+
+            <CardText className="text-muted mb-0"><strong>Gerarchia:</strong></CardText>
+            <VocabularyHierarchy hierarchy={voc.hierarchy}></VocabularyHierarchy>
 
           </CardBody>
         </Card>
@@ -67,11 +71,19 @@ const createVocabulary = (vocabulary) => {
 
 export default class VocabularyDetail extends React.Component {
   constructor(props) { super(props) }
-  componentWillMount() { this.props.fetchVocDetail(this.props.match.params.filter) }
+  componentWillMount() {
+    this.props.fetchVocDetail(this.props.match.params.filter)
+    this.props.fetchVocHierarchy(this.props.match.params.filter)
+  }
 
   render() {
-    return this.props.hasFetched
-      ? (<Container fluid>{ createVocabulary(this.props.data) }</Container>)
-      : this.props.error ? <Error msg={vocabularyError} /> : null
+    return this.props.vocabularyDetail.hasFetched && this.props.vocabularyHierarchy.hasFetched
+      ? (<Container fluid>{
+        createVocabulary(Object.assign(
+          this.props.vocabularyDetail.data,
+          { hierarchy: this.props.vocabularyHierarchy.data}
+        ))
+      }</Container>)
+      : this.props.vocabularyDetail.error ? <Error msg={vocabularyError} /> : null
   }
 }
