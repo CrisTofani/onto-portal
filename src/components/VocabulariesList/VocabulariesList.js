@@ -32,9 +32,8 @@ const mapVocabularies = vocabularies =>
 
           <Alert color="secondary" className="p-0 mb-0 border-0">
             <Badge color="danger" className="px-3 py-2">Vocabolario</Badge>
-            <strong className="px-2">
-              TAG: {voc.tags.map(tag => tag.value).join(' - ')}
-            </strong>
+            <strong className="px-2">TAG: </strong>
+            {voc.tags.map(tag => tag.value).join(' - ')}
           </Alert>
 
         </CardBody>

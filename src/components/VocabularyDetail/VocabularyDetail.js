@@ -28,11 +28,11 @@ const createVocabulary = (vocabulary) => {
             <CardText>{voc.descriptions.map(desc => desc.value)}</CardText>
 
             <CardText className="text-muted"><strong>Pubblicato da: </strong>
-              {voc.publishedBy}
+              {voc.publishedBy.map(publisher => publisher.value)}
             </CardText>
 
             <CardText className="text-muted"><strong>Titolare: </strong>
-              {voc.owner}
+              {voc.owner.map(owner => owner.value)}
             </CardText>
 
             <CardText className="text-muted"><strong>Creato da: </strong>
@@ -53,9 +53,8 @@ const createVocabulary = (vocabulary) => {
 
             <Alert color="secondary" className="p-0 border-0">
               <Badge color="danger" className="px-3 py-2">Vocabolario</Badge>
-              <strong className="px-2">
-                TAG: {voc.tags.map(tag => tag.value).join(' - ')}
-              </strong>
+              <strong className="px-2">TAG: </strong>
+              {voc.tags.map(tag => tag.value).join(' - ')}
             </Alert>
 
             <CardText className="text-muted mb-0"><strong>Gerarchia:</strong></CardText>

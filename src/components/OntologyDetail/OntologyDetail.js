@@ -56,9 +56,8 @@ const createOntology = (ontology) => {
 
             <Alert color="secondary" className="p-0 mb-0 border-0">
               <Badge color="primary" className="px-3 py-2">Ontologia</Badge>
-              <strong className="px-2">
-                TAG: {ont.tags.map(tag => tag.value).join(' - ')}
-              </strong>
+              <strong className="px-2">TAG: </strong>
+              {ont.tags.map(tag => tag.value).join(' - ')}
             </Alert>
 
           </CardBody>
