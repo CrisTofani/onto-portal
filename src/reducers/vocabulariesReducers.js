@@ -1,26 +1,10 @@
-const initialList = {
-  isFetching: false,
-  hasFetched: false,
-  data: [],
-  error: ''
-}
+import {
+  initialList as initialVocList,
+  initialDetail as initialVocDetail,
+  initialHierarchy as initialVocHierarchy
+} from '../config/initialStates'
 
-const initialDetail = {
-  isFetching: false,
-  hasFetched: false,
-  data: {},
-  error: ''
-}
-
-const initialHierarchy = {
-  isFetching: false,
-  hasFetched: false,
-  data: [],
-  error: ''
-}
-
-
-export const vocListReducer = (state = initialList, action) => {
+export const vocListReducer = (state = initialVocList, action) => {
   switch (action.type) {
     case 'REQUEST_VOC_LIST_PENDING':
       return {
@@ -47,7 +31,7 @@ export const vocListReducer = (state = initialList, action) => {
   }
 }
 
-export const vocDetailReducer = (state = initialDetail, action) => {
+export const vocDetailReducer = (state = initialVocDetail, action) => {
   switch (action.type) {
     case 'REQUEST_VOC_DETAIL_PENDING':
       return {
@@ -74,7 +58,7 @@ export const vocDetailReducer = (state = initialDetail, action) => {
   }
 }
 
-export const vocHierarchyReducer = (state = initialHierarchy, action) => {
+export const vocHierarchyReducer = (state = initialVocHierarchy, action) => {
   switch (action.type) {
     case 'REQUEST_VOC_HIERARCHY_PENDING':
       return {

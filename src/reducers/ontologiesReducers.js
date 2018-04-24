@@ -1,17 +1,9 @@
-const initialList = {
-  isFetching: false,
-  hasFetched: false,
-  data: [],
-  error: ''
-}
-const initialDetail = {
-  isFetching: false,
-  hasFetched: false,
-  data: {},
-  error: ''
-}
+import {
+  initialList as initialOntList,
+  initialDetail as initialOntDetail
+} from '../config/initialStates'
 
-export const ontListReducer = (state = initialList, action) => {
+export const ontListReducer = (state = initialOntList, action) => {
   switch (action.type) {
     case 'REQUEST_ONT_LIST_PENDING':
       return {
@@ -38,7 +30,7 @@ export const ontListReducer = (state = initialList, action) => {
   }
 }
 
-export const ontDetailReducer = (state = initialDetail, action) => {
+export const ontDetailReducer = (state = initialOntDetail, action) => {
   switch (action.type) {
     case 'REQUEST_ONT_DETAIL_PENDING':
       return {
