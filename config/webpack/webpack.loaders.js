@@ -1,46 +1,39 @@
 const jsRule = {
   test: /\.(js|jsx)$/,
-  exclude: /node_modules|public|config/,
+  exclude: /node_modules|public|config\/webpack/,
   use: [{
-    loader: 'babel-loader',
-    options: {
-      presets: ['babel-preset-stage-0', 'babel-preset-react', 'babel-preset-env']
-    }
+    loader: 'babel-loader'
   }]
 }
 
-const scssRule = (scssPlugin) => {
-  return {
-    test: /\.(scss)$/,
-    use: scssPlugin.extract({
-      fallback: 'style-loader',
-      use: [{
-        loader: 'css-loader'
-        // options: { alias: { '../img': '../public/img' } }
-      },
-      {
-        loader: 'postcss-loader',
-        options: {
-          plugins: () => [
-            require('autoprefixer')({ browsers: ['>1%', 'last 2 versions'] })
-          ]
-        }
-      },
-      { loader: 'sass-loader' }
-      ]
-    })
-  }
-}
+const scssRule = scssPlugin => ({
+  test: /\.(scss)$/,
+  use: scssPlugin.extract({
+    fallback: 'style-loader',
+    use: [{
+      loader: 'css-loader'
+      // options: { alias: { '../img': '../public/img' } }
+    },
+    {
+      loader: 'postcss-loader',
+      options: {
+        plugins: () => [
+          require('autoprefixer')({ browsers: ['>1%', 'last 2 versions'] })
+        ]
+      }
+    },
+    { loader: 'sass-loader' }
+    ]
+  })
+})
 
-const cssFontRule = (cssFontPlugin) => {
-  return {
-    test: /\.css$/,
-    use: cssFontPlugin.extract({
-      fallback: 'style-loader',
-      use: 'css-loader'
-    })
-  }
-}
+const cssFontRule = (cssFontPlugin) => ({
+  test: /\.css$/,
+  use: cssFontPlugin.extract({
+    fallback: 'style-loader',
+    use: 'css-loader'
+  })
+})
 
 const fontRule = {
   test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
