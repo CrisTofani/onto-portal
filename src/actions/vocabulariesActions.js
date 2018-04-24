@@ -1,16 +1,7 @@
-import serviceURI from '../config/serviceURI'
+import { urls, jsonRequest } from '../config/serviceURI'
 import { mapLangProps, mapLangPropsArr } from '../util/mapLangProps'
 
-const vocListURI = serviceURI.api_kataLOD.concat('/vocabularies')
-const init = {
-  method: 'GET',
-  headers: new Headers({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  }),
-  mode: 'cors',
-  cache: 'no-cache'
-}
+const vocabulariesURL = `${urls.api_kataLOD}/vocabularies`
 
 const requestVocListPending = response => ({
   type: 'REQUEST_VOC_LIST_PENDING'
@@ -50,37 +41,55 @@ const requestVocHierarchyRejected = error => ({
 
 export const requestVocList = () => dispatch =>
   new Promise(() => dispatch(requestVocListPending()))
-    .then(fetch(vocListURI, init)
-      .then(response => response.ok
-        ? response.json()
-          .then(data =>
-            dispatch(requestVocListFulfilled(mapLangPropsArr(data, 'it'))))
-
-        : dispatch(requestVocListRejected(response.statusText)))
-
-      .catch(error => dispatch(requestVocListRejected(error))))
+    .then(
+      fetch(vocabulariesURL, jsonRequest)
+        .then(
+          response => response.ok
+            ? response
+              .json()
+              .then(
+                data => dispatch(
+                  requestVocListFulfilled(mapLangPropsArr(data, 'it'))
+                )
+              )
+            : dispatch(requestVocListRejected(response.statusText))
+        )
+        .catch(error => dispatch(requestVocListRejected(error)))
+    )
 
 export const requestVocDetail = vocID => dispatch =>
   new Promise(() => dispatch(requestVocDetailPending()))
-    .then(fetch(vocListURI.concat('/', vocID), init)
-      .then(response => response.ok
-        ? response.json()
-          .then(data =>
-            dispatch(requestVocDetailFulfilled(mapLangProps(data, 'it'))))
-
-        : dispatch(requestVocDetailRejected(response.statusText)))
-
-      .catch(error => dispatch(requestVocDetailRejected(error))))
+    .then(
+      fetch(`${vocabulariesURL}/${vocID}`, jsonRequest)
+        .then(
+          response => response.ok
+            ? response
+              .json()
+              .then(
+                data => dispatch(
+                  requestVocDetailFulfilled(mapLangProps(data, 'it'))
+                )
+              )
+            : dispatch(requestVocDetailRejected(response.statusText))
+        )
+        .catch(error => dispatch(requestVocDetailRejected(error)))
+    )
 
 
 export const requestVocHierarchy = vocID => dispatch =>
   new Promise(() => dispatch(requestVocHierarchyPending()))
-    .then(fetch(vocListURI.concat('/hierarchy/', vocID, '?lang=', 'it'), init)
-      .then(response => response.ok
-        ? response.json()
-          .then(data =>
-            dispatch(requestVocHierarchyFulfilled(data)))
-
-        : dispatch(requestVocHierarchyRejected(response.statusText)))
-
-      .catch(error => dispatch(requestVocHierarchyRejected(error))))
+    .then(
+      fetch(`${vocabulariesURL}/hierarchy/${vocID}?lang${'it'}`, jsonRequest)
+        .then(
+          response => response.ok
+            ? response
+              .json()
+              .then(
+                data => dispatch(
+                  requestVocHierarchyFulfilled(data)
+                )
+              )
+            : dispatch(requestVocHierarchyRejected(response.statusText))
+        )
+        .catch(error => dispatch(requestVocHierarchyRejected(error)))
+    )
