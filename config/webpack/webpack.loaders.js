@@ -1,33 +1,32 @@
 const jsRule = {
   test: /\.(js|jsx)$/,
   exclude: /node_modules|public|config\/webpack/,
-  use: [{
-    loader: 'babel-loader'
-  }]
+  loader: 'babel-loader'
 }
 
 const scssRule = scssPlugin => ({
-  test: /\.(scss)$/,
+  test: /\.(s(a|c)ss)$/,
   use: scssPlugin.extract({
     fallback: 'style-loader',
-    use: [{
-      loader: 'css-loader'
-      // options: { alias: { '../img': '../public/img' } }
-    },
-    {
-      loader: 'postcss-loader',
-      options: {
-        plugins: () => [
-          require('autoprefixer')({ browsers: ['>1%', 'last 2 versions'] })
-        ]
-      }
-    },
-    { loader: 'sass-loader' }
+    use: [
+      {
+        loader: 'css-loader'
+        // options: { alias: { '../img': '../public/img' } }
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          plugins: () => [
+            require('autoprefixer')({ browsers: ['>1%', 'last 2 versions'] })
+          ]
+        }
+      },
+      { loader: 'sass-loader' }
     ]
   })
 })
 
-const cssFontRule = (cssFontPlugin) => ({
+const cssFontRule = cssFontPlugin => ({
   test: /\.css$/,
   use: cssFontPlugin.extract({
     fallback: 'style-loader',
@@ -39,11 +38,6 @@ const fontRule = {
   test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
   loader: 'file-loader',
   options: { name: './fonts/[name].[hash:8].[ext]' }
-}
-
-const htmlRule = {
-  test: /\.html$/,
-  use: [{ loader: 'html-loader', options: { minimize: true } }]
 }
 
 const imgRule = {
@@ -60,12 +54,10 @@ const imgRule = {
   ]
 }
 
-
 module.exports = {
   jsRule,
   scssRule,
   cssFontRule,
   fontRule,
-  htmlRule,
   imgRule
 }
