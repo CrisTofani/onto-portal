@@ -1,0 +1,27 @@
+{
+  "parser": "babel-eslint",
+  "plugins": ["jsx-a11y"],
+  "extends": [
+    "react-app",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
+  "rules": {
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "tabWidth": 2,
+        "ignoreComments": true
+      }
+    ],
+    "prettier/prettier": [
+      "warn",
+      {
+        "semi": false,
+        "singleQuote": true
+      }
+    ]
+  }
+}

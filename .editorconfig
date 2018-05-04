@@ -13,7 +13,3 @@ indent_size = 2
 
 [*.md]
 trim_trailing_whitespace = false
-
-[{package.json}]
-indent_style = tab
-indent_size = 4
