@@ -1,0 +1,4 @@
+{
+  "*.{jsx,js,json}": ["prettier  --no-semi --single-quote --write", "git add"],
+  "*.{css,md}": ["prettier --write", "git add"]
+}
