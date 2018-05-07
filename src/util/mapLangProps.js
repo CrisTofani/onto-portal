@@ -1,14 +1,4 @@
-const isEmptyArray = arr => arr.length === 0
-
-const hasArrayValue = value => Array.isArray(value)
-
-const hasLangValues = values => {
-  const langValues = values.filter(item =>
-    Object.prototype.hasOwnProperty.call(item, 'lang')
-  )
-
-  return !isEmptyArray(langValues)
-}
+import { isEmpty, isArray, hasProperty } from './commonUtils'
 
 const defaultLangValue = lang => {
   switch (lang) {
@@ -21,19 +11,23 @@ const defaultLangValue = lang => {
   }
 }
 
+// returns true when provided 'obj' has a 'lang' property
+const hasLangProperty = obj => hasProperty('lang')(obj)
+
+// returns true when provided 'property' has at least
+// one entry that produce true when provided to 'hasLangProperty'
+const isLangProperty = property =>
+  property.some(entry => hasLangProperty(entry))
+
 const filterLangValues = ([key, values], lang) => {
   const langValue = values.filter(item => item.lang === lang)
-  return isEmptyArray(langValue)
-    ? [key, defaultLangValue(lang)]
-    : [key, langValue]
+  return isEmpty(langValue) ? [key, defaultLangValue(lang)] : [key, langValue]
 }
 
 export const mapLangProps = (data, lang) => {
   const filterLangData = Object.entries(data)
     .filter(
-      pair =>
-        hasArrayValue(pair[1]) &&
-        (hasLangValues(pair[1]) || isEmptyArray(pair[1]))
+      pair => isArray(pair[1]) && (isLangProperty(pair[1]) || isEmpty(pair[1]))
     )
     .map(pair => filterLangValues(pair, lang))
     .reduce(
@@ -41,7 +35,7 @@ export const mapLangProps = (data, lang) => {
       {}
     )
 
-  return Object.assign(data, filterLangData)
+  return { ...data, ...filterLangData }
 }
 
 export const mapLangPropsArr = (arr, lang) =>
