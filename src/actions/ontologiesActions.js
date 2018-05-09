@@ -1,5 +1,5 @@
 import { urls, jsonRequest } from '../config/serviceURI'
-import { mapLangProps, mapLangPropsArr } from '../util/mapLangProps'
+import { dataParser, arrDataParser } from '../util/dataParser'
 
 const ontologiesURL = `${urls.api_kataLOD}/ontologies`
 
@@ -28,37 +28,33 @@ const requestOntDetailRejected = error => ({
 })
 
 export const requestOntList = () => dispatch =>
-  new Promise(() => dispatch(requestOntListPending()))
-    .then(
-      fetch(ontologiesURL, jsonRequest)
-        .then(
-          response => response.ok
+  new Promise(() => dispatch(requestOntListPending())).then(
+    fetch(ontologiesURL, jsonRequest)
+      .then(
+        response =>
+          response.ok
             ? response
-              .json()
-              .then(
-                data => dispatch(
-                  requestOntListFulfilled(mapLangPropsArr(data, 'it'))
+                .json()
+                .then(data =>
+                  dispatch(requestOntListFulfilled(arrDataParser(data, 'it')))
                 )
-              )
             : dispatch(requestOntListRejected(response.statusText))
-        )
-        .catch(error => dispatch(requestOntListRejected(error)))
-    )
+      )
+      .catch(error => dispatch(requestOntListRejected(error)))
+  )
 
 export const requestOntDetail = ontID => dispatch =>
-  new Promise(() => dispatch(requestOntDetailPending()))
-    .then(
-      fetch(`${ontologiesURL}/${ontID}`, jsonRequest)
-        .then(
-          response => response.ok
+  new Promise(() => dispatch(requestOntDetailPending())).then(
+    fetch(`${ontologiesURL}/${ontID}`, jsonRequest)
+      .then(
+        response =>
+          response.ok
             ? response
-              .json()
-              .then(
-                data => dispatch(
-                  requestOntDetailFulfilled(mapLangProps(data, 'it'))
+                .json()
+                .then(data =>
+                  dispatch(requestOntDetailFulfilled(dataParser(data, 'it')))
                 )
-              )
             : dispatch(requestOntDetailRejected(response.statusText))
-        )
-        .catch(error => dispatch(requestOntDetailRejected(error)))
-    )
+      )
+      .catch(error => dispatch(requestOntDetailRejected(error)))
+  )

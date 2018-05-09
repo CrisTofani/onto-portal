@@ -1,82 +1,96 @@
 import React from 'react'
 import {
-  Container, Row, Col,
-  Card, CardHeader, CardBody, CardTitle, CardSubtitle, CardText, CardFooter,
-  Alert, Badge
+  Container,
+  Row,
+  Col,
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  CardText,
+  Alert,
+  Badge
 } from 'reactstrap'
 
 import Error from '../Error'
 
-const ontologyError = 'Errore durante il caricamento dell\'ontologia'
+const ontologyError = "Errore durante il caricamento dell'ontologia"
 
-const createOntology = (ontology) => {
+const createOntology = ontology => {
   const ont = ontology
   return (
     <Row>
-      <Col sm={2}></Col>
+      <Col sm={2} />
       <Col sm={8}>
         <Card className="border-0">
-
           <CardHeader className="bg-primary text-white border-0">
             <strong>{ont.titles.map(title => title.value)}</strong>
           </CardHeader>
           <CardBody>
-
             <CardTitle className="text-primary">{ont.id}</CardTitle>
 
             <CardText>{ont.descriptions.map(desc => desc.value)}</CardText>
 
-            <CardText className="text-muted"><strong>Pubblicato da: </strong>
-              {ont.publishedBy}
+            <CardText className="text-muted">
+              <strong>Pubblicato da: </strong>
+              {ont.publishedBy.map(publisher => publisher.value)}
             </CardText>
 
-            <CardText className="text-muted"><strong>Titolare: </strong>
+            <CardText className="text-muted">
+              <strong>Titolare: </strong>
               {ont.owner}
             </CardText>
 
-            <CardText className="text-muted"><strong>Creato da: </strong>
+            <CardText className="text-muted">
+              <strong>Creato da: </strong>
               {ont.creators.map(creator => creator.value).join(' - ')}
             </CardText>
 
-            <CardText className="text-muted"><strong>Lingue: </strong>
+            <CardText className="text-muted">
+              <strong>Lingue: </strong>
               {ont.langs.join(' - ')}
             </CardText>
 
-            <CardText className="text-muted"><strong>Data ultima modifica: </strong>
+            <CardText className="text-muted">
+              <strong>Data ultima modifica: </strong>
               {ont.lastEditDate}
             </CardText>
 
-            <CardText className="text-muted"><strong>Licenza: </strong>
+            <CardText className="text-muted">
+              <strong>Licenza: </strong>
               {ont.licenses.map(license => license.value).join(' ')}
             </CardText>
 
-            <CardText className="text-muted"><strong>Versioni: </strong>
+            <CardText className="text-muted">
+              <strong>Versioni: </strong>
               {ont.versions.map(version => version.number).join(' - ')}
             </CardText>
 
             <Alert color="secondary" className="p-0 mb-0 border-0">
-              <Badge color="primary" className="px-3 py-2">Ontologia</Badge>
+              <Badge color="primary" className="px-3 py-2">
+                Ontologia
+              </Badge>
               <strong className="px-2">TAG: </strong>
               {ont.tags.map(tag => tag.value).join(' - ')}
             </Alert>
-
           </CardBody>
         </Card>
       </Col>
-      <Col sm={2}></Col>
+      <Col sm={2} />
     </Row>
   )
 }
 
 export default class OntologyDetail extends React.Component {
-  constructor(props) { super(props) }
   componentWillMount() {
     this.props.fetchOntDetail(this.props.match.params.filter)
   }
 
   render() {
-    return this.props.hasFetched
-      ? (<Container fluid>{ createOntology(this.props.data) }</Container>)
-      : this.props.error ? <Error msg={ontologyError} /> : null
+    return this.props.hasFetched ? (
+      <Container fluid>{createOntology(this.props.data)}</Container>
+    ) : this.props.error ? (
+      <Error msg={ontologyError} />
+    ) : null
   }
 }
