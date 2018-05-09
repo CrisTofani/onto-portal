@@ -24,31 +24,40 @@ const createOntology = ontology => {
       <Col sm={8}>
         <Card className="border-0">
           <CardHeader className="bg-primary text-white border-0">
-            <strong>{ont.titles.map(title => title.value)}</strong>
+            <strong>Ontologia</strong>
           </CardHeader>
           <CardBody>
-            <CardTitle className="text-primary">{ont.id}</CardTitle>
-
-            <CardText>{ont.descriptions.map(desc => desc.value)}</CardText>
+            <CardTitle className="text-primary">
+              {ont.titles.map(title => title.value)}
+            </CardTitle>
 
             <CardText className="text-muted">
-              <strong>Pubblicato da: </strong>
-              {ont.publishedBy.map(publisher => publisher.value)}
+              <strong>Descrizione:</strong>
+              <br />
+              {ont.descriptions.map(desc => desc.value)}
             </CardText>
 
             <CardText className="text-muted">
-              <strong>Titolare: </strong>
-              {ont.owner.map(owner => owner.value)}
+              <strong>URL:</strong>
+              <br />
+              {ont.url}
+            </CardText>
+            <CardText className="text-muted">
+              <strong>Titolare:</strong>
+              <br />
+              {ont.owner.map(owner => owner.value).join('\n')}
             </CardText>
 
             <CardText className="text-muted">
-              <strong>Creato da: </strong>
-              {ont.creators.map(creator => creator.value).join(' - ')}
+              <strong>Pubblicato da:</strong>
+              <br />
+              {ont.publishedBy.map(publisher => publisher.value).join('\n')}
             </CardText>
 
             <CardText className="text-muted">
-              <strong>Lingue: </strong>
-              {ont.langs.join(' - ')}
+              <strong>Creato da:</strong>
+              <br />
+              {ont.creators.map(creator => creator.value).join('\n')}
             </CardText>
 
             <CardText className="text-muted">
@@ -57,22 +66,24 @@ const createOntology = ontology => {
             </CardText>
 
             <CardText className="text-muted">
+              <strong>Versioni: </strong>
+              {/* {ont.versions.map(version => version.number).join(' - ')} */}
+            </CardText>
+
+            <CardText className="text-muted">
               <strong>Licenza: </strong>
               {ont.licenses.map(license => license.value).join(' ')}
             </CardText>
 
             <CardText className="text-muted">
-              <strong>Versioni: </strong>
-              {ont.versions.map(version => version.number).join(' - ')}
+              <strong>Lingue: </strong>
+              {ont.langs.join(' - ')}
             </CardText>
 
-            <Alert color="secondary" className="p-0 mb-0 border-0">
-              <Badge color="primary" className="px-3 py-2">
-                Ontologia
-              </Badge>
-              <strong className="px-2">TAG: </strong>
+            <CardText className="text-muted">
+              <strong>TAG: </strong>
               {ont.tags.map(tag => tag.value).join(' - ')}
-            </Alert>
+            </CardText>
           </CardBody>
         </Card>
       </Col>
