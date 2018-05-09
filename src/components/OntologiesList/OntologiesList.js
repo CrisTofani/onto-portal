@@ -6,10 +6,7 @@ import {
   Card,
   CardBody,
   CardTitle,
-  CardSubtitle,
   CardText,
-  CardFooter,
-  Alert,
   Badge
 } from 'reactstrap'
 
@@ -23,17 +20,30 @@ const mapOntologies = ontologies =>
     <LinkWrap key={ont.id} to={`/ontologies/${ont.id}`} className="text-dark">
       <Card className="border-0">
         <CardBody>
-          <CardTitle className="text-primary">{ont.titles[0].value}</CardTitle>
-          <CardSubtitle>{ont.id}</CardSubtitle>
-          <CardText>{ont.descriptions[0].value}</CardText>
+          <CardTitle className="text-primary">
+            {ont.titles.map(title => title.value)}
+          </CardTitle>
 
-          <Alert color="secondary" className="p-0 mb-0 border-0">
+          <CardText className="text-muted">{ont.url}</CardText>
+
+          <CardText className="text-muted">
+            <strong>Descrizione:</strong>
+            <br />
+            {ont.descriptions.map(desc => desc.value)}
+          </CardText>
+
+          <CardText className="text-muted">
+            <strong>Data ultima modifica: </strong>
+            {ont.lastEditDate}
+          </CardText>
+
+          <CardText className="text-muted">
             <Badge color="primary" className="px-3 py-2">
               Ontologia
             </Badge>
-            <strong className="px-2">TAG: </strong>
+            <strong> TAG: </strong>
             {ont.tags.map(tag => tag.value).join(' - ')}
-          </Alert>
+          </CardText>
         </CardBody>
       </Card>
     </LinkWrap>
@@ -58,9 +68,6 @@ const createOntologies = ontologies => {
 }
 
 export default class OntologiesList extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   componentWillMount() {
     this.props.fetchOntList()
   }
