@@ -1,4 +1,7 @@
 // self explained
+export const isDef = x => typeof x !== 'undefined'
+
+// self explained
 export const isEmpty = arr => arr.length === 0
 
 // self explained
