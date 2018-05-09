@@ -1,6 +1,24 @@
-import { isEmpty, isArray, hasProperty } from './commonUtils'
+import { isEmpty } from './commonUtils'
 
-const defaultLangValue = lang => {
+const ontologyLanguageProps = []
+const vocabularyLanguageProps = [
+  'owners',
+  'creators',
+  // 'license',
+  // 'version.comment',
+  'publishedBy',
+  'tags' //,
+  // 'themes',
+  // 'subthemes'
+]
+const languageProps = [
+  'titles',
+  'descriptions',
+  ...ontologyLanguageProps,
+  ...vocabularyLanguageProps
+]
+
+const defaultLanguage = lang => {
   switch (lang) {
     case 'it':
       return [{ lang: lang, value: 'Non disponibile in italiano' }]
@@ -11,32 +29,21 @@ const defaultLangValue = lang => {
   }
 }
 
-// returns true when provided 'obj' has a 'lang' property
-const hasLangProperty = obj => hasProperty('lang')(obj)
+const languagePropertyFilter = languageProperty =>
+  languageProps.includes(languageProperty)
 
-// returns true when provided 'property' has at least
-// one entry that produce true when provided to 'hasLangProperty'
-const isLangProperty = property =>
-  property.some(entry => hasLangProperty(entry))
-
-const filterLangValues = ([key, values], lang) => {
-  const langValue = values.filter(item => item.lang === lang)
-  return isEmpty(langValue) ? [key, defaultLangValue(lang)] : [key, langValue]
+const languagePropertyMap = ([languagePropKey, languagePropValue], lang) => {
+  const filteredProp = languagePropValue.filter(entry => entry.lang === lang)
+  return isEmpty(filteredProp)
+    ? [languagePropKey, defaultLanguage(lang)]
+    : [languagePropKey, filteredProp]
 }
 
-export const mapLangProps = (data, lang) => {
-  const filterLangData = Object.entries(data)
-    .filter(
-      pair => isArray(pair[1]) && (isLangProperty(pair[1]) || isEmpty(pair[1]))
-    )
-    .map(pair => filterLangValues(pair, lang))
-    .reduce(
-      (accumulator, pair) => Object.assign(accumulator, { [pair[0]]: pair[1] }),
-      {}
-    )
-
-  return { ...data, ...filterLangData }
-}
+export const mapLangProps = (data, lang) =>
+  Object.entries(data)
+    .filter(([key, val]) => languagePropertyFilter(key))
+    .map(keyValPair => languagePropertyMap(keyValPair, lang))
+    .reduce((acc, [key, val]) => ({ ...acc, [key]: val }), data)
 
 export const mapLangPropsArr = (arr, lang) =>
   arr.map(props => mapLangProps(props, lang))
