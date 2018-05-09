@@ -38,7 +38,7 @@ const createOntology = ontology => {
 
             <CardText className="text-muted">
               <strong>Titolare: </strong>
-              {ont.owner}
+              {ont.owner.map(owner => owner.value)}
             </CardText>
 
             <CardText className="text-muted">

@@ -1,21 +1,16 @@
 import { isEmpty } from './commonUtils'
 
-const ontologyLanguageProps = []
-const vocabularyLanguageProps = [
-  'owners',
-  'creators',
-  // 'license',
-  // 'version.comment',
-  'publishedBy',
-  'tags' //,
-  // 'themes',
-  // 'subthemes'
-]
 const languageProps = [
   'titles',
   'descriptions',
-  ...ontologyLanguageProps,
-  ...vocabularyLanguageProps
+  'publishedBy',
+  'creators',
+  'owner',
+  // 'license',
+  // 'version.comment',
+  'tags' //,
+  // 'themes',
+  // 'subthemes'
 ]
 
 const defaultLanguage = lang => {
