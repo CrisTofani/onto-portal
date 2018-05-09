@@ -32,8 +32,13 @@ const defaultLanguage = lang => {
 const languagePropertyFilter = languageProperty =>
   languageProps.includes(languageProperty)
 
+const fixLanguageProperty = ([languagePropKey, languagePropValue]) =>
+  isEmpty(languagePropValue) || languagePropValue === {}
+    ? [languagePropKey, []]
+    : [languagePropKey, languagePropValue]
+
 const languagePropertyMap = ([languagePropKey, languagePropValue], lang) => {
-  const filteredProp = languagePropValue.filter(entry => entry.lang === lang)
+  const filteredProp = languagePropValue.filter(value => value.lang === lang)
   return isEmpty(filteredProp)
     ? [languagePropKey, defaultLanguage(lang)]
     : [languagePropKey, filteredProp]
@@ -42,7 +47,9 @@ const languagePropertyMap = ([languagePropKey, languagePropValue], lang) => {
 export const dataParser = (data, lang) =>
   Object.entries(data)
     .filter(([key, val]) => languagePropertyFilter(key))
-    .map(keyValPair => languagePropertyMap(keyValPair, lang))
+    .map(keyValPair =>
+      languagePropertyMap(fixLanguageProperty(keyValPair), lang)
+    )
     .reduce((acc, [key, val]) => ({ ...acc, [key]: val }), data)
 
 export const arrDataParser = (arr, lang) =>
