@@ -45,25 +45,25 @@ const createVocabulary = vocabulary => {
             <CardText className="text-muted">
               <strong>Titolare:</strong>
               <br />
-              {voc.owners
-                .map(owner => `${owner.value} (${owner.uri})`)
-                .join('\n')}
+              {voc.owners.map(owner => (
+                <div>{`${owner.value} (${owner.uri})`}</div>
+              ))}
             </CardText>
 
             <CardText className="text-muted">
               <strong>Pubblicato da:</strong>
               <br />
-              {voc.publishedBy
-                .map(publisher => `${publisher.value} (${publisher.uri})`)
-                .join('\n')}
+              {voc.publishedBy.map(publisher => (
+                <div>{`${publisher.value} (${publisher.uri})`}</div>
+              ))}
             </CardText>
 
             <CardText className="text-muted">
               <strong>Creato da:</strong>
               <br />
-              {voc.creators
-                .map(creator => `${creator.value} (${creator.uri})`)
-                .join('\n')}
+              {voc.creators.map(creator => (
+                <div>{`${creator.value} (${creator.uri})`}</div>
+              ))}
             </CardText>
 
             <CardText className="text-muted">
