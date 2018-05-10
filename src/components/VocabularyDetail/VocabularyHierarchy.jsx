@@ -14,7 +14,7 @@ const CollapseTrigger = props => {
     <Card className="border-0 m-0">
       <CardText className="mb-0 text-muted">
         <i className={`fa fa-sm fa${isExtensibleOrOpen}-square`} />
-        <span className="mx-2">{props.node.label}</span>
+        <span className="mx-1" />
         {props.node.label}
       </CardText>
     </Card>
