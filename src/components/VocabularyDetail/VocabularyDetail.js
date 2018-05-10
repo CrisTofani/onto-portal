@@ -45,7 +45,7 @@ const createVocabulary = vocabulary => {
             <CardText className="text-muted">
               <strong>Titolare:</strong>
               <br />
-              {voc.owner
+              {voc.owners
                 .map(owner => `${owner.value} (${owner.uri})`)
                 .join('\n')}
             </CardText>
@@ -97,6 +97,8 @@ const createVocabulary = vocabulary => {
               {voc.tags.map(tag => tag.value).join(' - ')}
             </CardText>
 
+            <hr />
+
             {voc.hierarchy ? (
               <CardText className="text-muted mb-0">
                 <strong>Gerarchia:</strong>
@@ -114,19 +116,12 @@ const createVocabulary = vocabulary => {
 export default class VocabularyDetail extends React.Component {
   componentWillMount() {
     this.props.fetchVocDetail(this.props.match.params.filter)
-    this.props.fetchVocHierarchy(this.props.match.params.filter)
   }
 
   render() {
-    return this.props.vocabularyDetail.hasFetched &&
-      this.props.vocabularyHierarchy.hasFetched ? (
-      <Container fluid>
-        {createVocabulary({
-          ...this.props.vocabularyDetail.data,
-          hierarchy: this.props.vocabularyHierarchy.data
-        })}
-      </Container>
-    ) : this.props.vocabularyDetail.error ? (
+    return this.props.hasFetched ? (
+      <Container fluid>{createVocabulary(this.props.data)}</Container>
+    ) : this.props.error ? (
       <Error msg={vocabularyError} />
     ) : null
   }
