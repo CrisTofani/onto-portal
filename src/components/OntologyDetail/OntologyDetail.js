@@ -44,21 +44,21 @@ const createOntology = ontology => {
             <CardText className="text-muted">
               <strong>Titolare:</strong>
               <br />
-              {ont.owners
-                .map(owner => `${owner.value} (${owner.uri})`)
-                .join('\n')}
+              {ont.owners.map(owner => <div>{`${owner.value}`}</div>)}
             </CardText>
 
             <CardText className="text-muted">
               <strong>Pubblicato da:</strong>
               <br />
-              {ont.publishedBy.map(publisher => publisher.value).join('\n')}
+              {ont.publishedBy.map(publisher => (
+                <div>{`${publisher.value}`}</div>
+              ))}
             </CardText>
 
             <CardText className="text-muted">
               <strong>Creato da:</strong>
               <br />
-              {ont.creators.map(creator => creator.value).join('\n')}
+              {ont.creators.map(creator => <div>{`${creator.value}`}</div>)}
             </CardText>
 
             <CardText className="text-muted">
