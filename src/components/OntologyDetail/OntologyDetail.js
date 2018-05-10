@@ -7,9 +7,7 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
-  CardText,
-  Alert,
-  Badge
+  CardText
 } from 'reactstrap'
 
 import Error from '../Error'
@@ -42,10 +40,13 @@ const createOntology = ontology => {
               <br />
               {ont.url}
             </CardText>
+
             <CardText className="text-muted">
               <strong>Titolare:</strong>
               <br />
-              {ont.owner.map(owner => owner.value).join('\n')}
+              {ont.owners
+                .map(owner => `${owner.value} (${owner.uri})`)
+                .join('\n')}
             </CardText>
 
             <CardText className="text-muted">
