@@ -27,18 +27,6 @@ const requestVocDetailRejected = error => ({
   payload: error
 })
 
-const requestVocHierarchyPending = response => ({
-  type: 'REQUEST_VOC_HIERARCHY_PENDING'
-})
-const requestVocHierarchyFulfilled = response => ({
-  type: 'REQUEST_VOC_HIERARCHY_FULFILLED',
-  payload: response
-})
-const requestVocHierarchyRejected = error => ({
-  type: 'REQUEST_VOC_HIERARCHY_REJECTED',
-  payload: error
-})
-
 export const requestVocList = () => dispatch =>
   new Promise(() => dispatch(requestVocListPending())).then(
     fetch(vocabulariesURL, jsonRequest)
@@ -69,18 +57,4 @@ export const requestVocDetail = vocID => dispatch =>
             : dispatch(requestVocDetailRejected(response.statusText))
       )
       .catch(error => dispatch(requestVocDetailRejected(error)))
-  )
-
-export const requestVocHierarchy = vocID => dispatch =>
-  new Promise(() => dispatch(requestVocHierarchyPending())).then(
-    fetch(`${vocabulariesURL}/hierarchy/${vocID}?lang${'it'}`, jsonRequest)
-      .then(
-        response =>
-          response.ok
-            ? response
-                .json()
-                .then(data => dispatch(requestVocHierarchyFulfilled(data)))
-            : dispatch(requestVocHierarchyRejected(response.statusText))
-      )
-      .catch(error => dispatch(requestVocHierarchyRejected(error)))
   )
