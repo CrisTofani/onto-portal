@@ -5,7 +5,7 @@ const languageProps = [
   'descriptions',
   'publishedBy',
   'creators',
-  'owner',
+  'owners',
   // 'license',
   // 'version.comment',
   'tags' //,
