@@ -11,5 +11,3 @@ export const initialDetail = {
   data: {},
   error: ''
 }
-
-export const initialHierarchy = { ...initialList }
