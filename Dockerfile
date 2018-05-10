@@ -19,10 +19,14 @@ RUN git clone https://github.com/and0111/onto-portal.git
 # Create app directory #refactor
 WORKDIR /onto-portal
 
+# switch to 'develop' branch
+RUN git fetch
+RUN git checkout develop
+
 # Install application dependecies
 RUN yarn
 
-# Build 
+# Build
 RUN yarn build
 
 # Exposing port
